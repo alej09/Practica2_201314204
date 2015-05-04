@@ -21,7 +21,8 @@ public class Menup {
     }
 
     public static void algoritmoHanoi(int n) {
-        Stack<Integer>[] torres = new Stack[4];
+        @SuppressWarnings("unchecked")
+		Stack<Integer>[] torres = new Stack[4];
         torres[1] = new Stack<Integer>();
         torres[2] = new Stack<Integer>();
         torres[3] = new Stack<Integer>();

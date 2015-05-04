@@ -1,0 +1,66 @@
+package tutorial;
+
+public class Mover {
+	
+	//Numero de discos en la torre origen
+	private int n;
+	private Torres origen;
+	private Torres auxiliar;
+	private Torres destino;
+	
+	/**
+	 * Crea el nodo del arbol
+	 * @param n
+	 * @param origen
+	 * @param auxiliar
+	 * @param destino
+	 */
+	public Mover(int n,Torres origen,Torres auxiliar, Torres destino){
+		this.n = n;
+		this.origen = origen;
+		this.auxiliar = auxiliar;
+		this.destino = destino;
+	}
+	/**
+	 * Crea el hijo izquierdo del nodo actual
+	 * @return hijoIzquierdo
+	 */
+	public Mover hijoIzquierdo(){
+		return new Mover(n-1,origen,destino,auxiliar);
+	}
+	/**
+	 * Crea el hijo derecho del nodo actual
+	 * @return hijoDerecho
+	 */
+	public Mover hijoDerecho(){
+		return new Mover(n-1,auxiliar,origen,destino);
+	}
+	/**
+	 * Comprueba si tiene hijo izquierdo
+	 * @return true si tiene hijo izquierdo, false si no lo tiene
+	 */
+	public boolean tieneHijoIzquierdo(){
+		return n > 1;
+	}
+	/**
+	 * Comprueba si tiene hijo derecho
+	 * @return true si tiene hijo derecho, false si no lo tiene
+	 */
+	public boolean tieneHijoDerecho(){
+		return n > 1;
+	}
+	/**
+	 * Retorna la torre origen
+	 * @return torre origen
+	 */
+	public Torres getOrigen(){
+		return origen;
+	}
+	/**
+	 * Retorna la torre destino
+	 * @return torre destino
+	 */
+	public Torres getDestino(){
+		return destino;
+	}
+}

@@ -1,0 +1,65 @@
+package tutorial;
+
+public class Config {
+
+	public static int RECURSIVO = 0, ITERATIVO = 1;
+	//Velocidad en segundos a la que se realizara un movimiento
+	private int velocidad;
+	//Numero de discos de la simulacion
+	private int numeroDiscos;
+	//Algoritmo usado para resolverlo
+	private int algoritmoUsado;
+	/**
+	 * Inicializa la configuracion
+	 * @param velocidad
+	 * @param numeroDiscos
+	 */
+	public Config(int velocidad,int numeroDiscos,int algoritmoUsado){
+		this.velocidad = velocidad;
+		this.numeroDiscos = numeroDiscos;
+		this.algoritmoUsado = algoritmoUsado;
+	}
+	/**
+	 * Consigue la velocidad de la configuracion
+	 * @return velocidad en segundos
+	 */
+	public int getVelocidad(){
+		return velocidad;
+	}
+	/**
+	 * Consigue el numero de discos de la configuracion
+	 * @return numero de discos
+	 */
+	public int getNumeroDiscos(){
+		return numeroDiscos;
+	}
+	/**
+	 * Consigue el algoritmo usado
+	 * @return algoritmo usado
+	 */
+	public int getAlgoritmo(){
+		return algoritmoUsado;
+	}
+	/**
+	 * Asigna un nuevo valor a la velocidad
+	 * @param velocidad
+	 */
+	public void setVelocidad(int velocidad){
+		this.velocidad = velocidad;
+	}
+	/**
+	 * Asigna un nuevo valor al numero de discos
+	 * @param numeroDiscos
+	 */
+	public void setNumeroDiscos(int numeroDiscos){
+		this.numeroDiscos = numeroDiscos;
+	}
+	/**
+	 * Asigna el algoritmo utilizado para resolver
+	 * el problema de las torres
+	 * @param algoritmo
+	 */
+	public void setAlgoritmo(int algoritmo){
+		this.algoritmoUsado = algoritmo;
+	}
+}

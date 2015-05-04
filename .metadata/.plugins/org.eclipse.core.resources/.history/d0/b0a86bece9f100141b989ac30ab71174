@@ -1,0 +1,179 @@
+package tutorial;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.LinkedList;
+import java.util.Stack;
+
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+
+public class THanoi extends JPanel{
+	
+	//Largo del panel
+	public static final int LARGO = 640;
+	//Alto del panel
+	public static final int ALTO = 480;
+	
+	private static final long serialVersionUID = 1L;
+	
+	//Array de las torres del juego
+	private Torres [] juego;
+	private int numDiscos; //Numero de discos
+	private Image fondo; //Imagen de fondo del panel
+	//Guardara el recorrido en inorden del arbol que genera la solucion
+	//al problema de las torres
+	private LinkedList<Mover> movimientos;
+	private Font fuente; //Fuente para pintar
+	private int movimientosRealizados; //Numero de movimientos realizados 
+	private int algoritmoUsado;
+	/**
+	 * Inicializa el juego
+	 * @param numeroDiscos
+	 */
+	public THanoi(int numeroDiscos){
+		movimientosRealizados = 0;
+		numDiscos = numeroDiscos;
+		juego = new Torres[3];
+		movimientos = new LinkedList<Mover>();
+		fuente = new Font("Courier New", Font.BOLD, 15);
+		for(int i=0;i<juego.length;i++){
+			juego[i] = new Torres("imagenes/torre.png",i);
+		}
+		for(int i=numDiscos;i> 0; i--){
+			juego[0].push(new NDiscos(i));
+		}
+		fondo = new ImageIcon(this.getClass().getResource("img/fondo.jpg")).getImage();
+		setPreferredSize(new Dimension(LARGO, ALTO));
+		algoritmoUsado = Config.RECURSIVO;
+	}
+	/**
+	 * Retorna la lista de movimientos. Los algoritmos hanoiRecursivo
+	 * y hanoiIterativo rellenaran esta lista con el recorrido sobre
+	 * el arbol.
+	 * @return lista de movimientos
+	 */
+	public LinkedList<Mover> getMovimientos(){
+		return movimientos;
+	}
+	
+	/**
+	 * Reinicia el juego con el numero de discos numeroDiscos
+	 * @param numeroDiscos
+	 */
+	public void reiniciar(int numeroDiscos,int algoritmoUsado){
+		movimientos.clear();
+		movimientosRealizados = 0;
+		for(int i=0;i<juego.length;i++){
+			juego[i].clear();
+		}
+		
+		this.numDiscos = numeroDiscos;
+		for(int i=numDiscos;i>0;i--){
+			juego[0].push(new NDiscos(i));
+		}
+		this.algoritmoUsado = algoritmoUsado;
+	}
+	/**
+	 * Mueve el primer disco de la torre origen a la torre destino
+	 * si se puede
+	 * @param origen
+	 * @param destino
+	 */
+	public void mover(Torres origen, Torres destino){
+		if(!origen.empty()){
+			//Quedan discos por mover
+			if(destino.empty()){
+				//caso directo --> torre destino vacia				
+				destino.push(origen.pop());
+			}else{
+				//torre destino tiene discos --> comparamos si la cima de
+				//origen puede añadirse a destino
+				if(origen.peek().getDisco() < destino.peek().getDisco()){
+					destino.push(origen.pop());
+				}
+			}
+		}
+		movimientosRealizados++;		
+	}
+	/**
+	 * Resuelve las torres de hanoi dejando los movimientos ha realizar en la lista movimientos
+	 * @param n
+	 * @param origen
+	 * @param auxiliar
+	 * @param destino
+	 */
+	private void hanoiRec(int n, Torres origen, Torres auxiliar, Torres destino){
+		//Caso directo
+		if(n==1){
+			movimientos.add(new Mover(n, origen, auxiliar, destino));
+		}else{
+			//caso recursivo
+			hanoiRec(n-1, origen, destino,auxiliar);
+			movimientos.add(new Mover(n, origen, auxiliar, destino));
+			hanoiRec(n-1, auxiliar, origen, destino);
+		}
+	}
+	/**
+	 * Resuelve el juego de las torres de hanoi recursivamente
+	 */
+	public void hanoiRecursivo(){
+		hanoiRec(numDiscos, juego[0],juego[1],juego[2]);
+	}
+	
+	/**
+	 * Resuelve las torres de hanoi dejando los movimientos ha realizar en la lista movimientos
+	 * @param arbol
+	 */
+	private void hanoiIter(Mover arbol){
+		Stack<Mover> pila = new Stack<Mover>();
+		
+		while (arbol.tieneHijoIzquierdo()){
+			pila.push(arbol);
+			arbol = arbol.hijoIzquierdo();
+		}
+		pila.push(arbol);
+		
+		while (!pila.isEmpty()){
+			arbol = pila.pop();
+			movimientos.add(arbol);
+			while (arbol.tieneHijoDerecho()){
+				arbol = arbol.hijoDerecho();
+				while (arbol.tieneHijoIzquierdo()){
+					pila.push(arbol);
+					arbol = arbol.hijoIzquierdo();
+				}
+				pila.push(arbol);
+			}
+		}
+	}
+	/**
+	 * Resuelve el juego de las torres de hanoi iterativamente
+	 */
+	public void hanoiIterativo(){
+		hanoiIter(new Mover(numDiscos, juego[0],juego[1],juego[2]));
+	}
+	
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		g.drawImage(fondo,0,0,null);
+		g.setFont(fuente);
+		g.setColor(Color.WHITE);
+		for(Torres torre: juego){
+			torre.paint(g);		
+		}
+		g.drawString("Simulador de las \"Torres De Hanoi\" ",20,25);
+		g.drawString("Numero mínimo de movimientos: "+(int)(Math.pow(2, numDiscos)-1),20,45);
+		g.drawString("Movimientos realizados: "+ movimientosRealizados,20,65);
+		if(algoritmoUsado == Config.RECURSIVO){
+			g.drawString("Algoritmo: Recursivo",350,45);
+		}else{
+			g.drawString("Algoritmo: Iterativo",350,45);
+		}
+	}
+
+}

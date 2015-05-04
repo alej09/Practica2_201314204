@@ -4,30 +4,28 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
-
+import juego.TorredeHanoi;
  
 public class Hanoi extends JFrame implements ActionListener, ChangeListener {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel labelNroDiscos;
     private JLabel labelInformacion;
     private JLabel spinnerNroDiscos;
     private JButton botonIniciar;
     private Graficos dibujo;
-
     public Hanoi() {
         super("TUTORIAL TORRES DE HANOI");
         configurarVentana();
@@ -35,8 +33,12 @@ public class Hanoi extends JFrame implements ActionListener, ChangeListener {
         this.setVisible(true);
     }
 
-    private void configurarVentana() {
-        this.setSize(900, 620);
+    JMenuBar barra;
+    JMenu menu;
+    JMenuItem boton1, boton2;
+    
+	private void configurarVentana() {
+        this.setSize(900, 650);
         this.setVisible(true);
         this.setLayout(new BorderLayout());
         this.setLocationRelativeTo(null);
@@ -45,8 +47,10 @@ public class Hanoi extends JFrame implements ActionListener, ChangeListener {
     }
 
     private void inicializarComponentes() {
-
-        JPanel panelInferior = new JPanel();
+    	
+    	met();
+    	paintComponents(getGraphics());
+    	JPanel panelInferior = new JPanel();
 
         labelNroDiscos = new JLabel(" ");
         panelInferior.add(labelNroDiscos);
@@ -67,8 +71,11 @@ public class Hanoi extends JFrame implements ActionListener, ChangeListener {
         add(panelInferior, BorderLayout.SOUTH);
         dibujo = new Graficos(5, this);
         add(dibujo, BorderLayout.CENTER);
-
-
+       
+        menu.add(boton1);
+        menu.add(boton2);
+        barra.add(menu);
+        setJMenuBar(barra);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -87,9 +94,19 @@ public class Hanoi extends JFrame implements ActionListener, ChangeListener {
                 botonIniciar.setText("Pausar");
             }
         }
+        
+        if(e.getSource()==boton1){
+        	 llamarMenu();
+        	}
+        if (e.getSource()==boton2){	
+        	
+        	System.exit(1);
+        }
+        
     }
+      
 
-    public void stateChanged(ChangeEvent e) {
+	public void stateChanged(ChangeEvent e) {
         dibujo.pausarAnimacion();
         botonIniciar.setText("Iniciar");
         labelInformacion.setVisible(false);
@@ -102,4 +119,20 @@ public class Hanoi extends JFrame implements ActionListener, ChangeListener {
         botonIniciar.setText("Iniciar De Nuevo");
         labelInformacion.setVisible(true);
     }
+    
+    public void met(){
+    	 
+    	    barra = new JMenuBar();
+    	    menu = new JMenu("Ficheros");
+    	    boton1 = new JMenuItem("Regresar");
+    	    boton2 = new JMenuItem("Salir");
+    	    boton1.addActionListener(this);
+    	    boton2.addActionListener(this);
+    }
+    
+    public static void llamarMenu(){
+    	String[] args=null;
+    	TorredeHanoi.main(args);
+	}
+                                   
 }

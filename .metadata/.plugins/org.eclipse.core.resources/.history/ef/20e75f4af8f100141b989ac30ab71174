@@ -1,0 +1,53 @@
+package tutorial;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.Stack;
+
+import javax.swing.ImageIcon;
+
+public class Torres extends Stack<NDiscos> {
+	
+	
+	private static final long serialVersionUID = 1L;
+	//Las torres se empezaran a pintar a partir de DESPLAZAMIENTO_X_TORRE pixeles
+	public static final int DESPLAZAMIENTO_X_TORRE = 45;
+	//Las torres se empezaran a pintar a partir de DESPLAZAMIENTO_Y_TORRE pixeles
+	public static final int DESPLAZAMIENTO_Y_TORRE = 250;
+	//Separacion en pixeles entre las torres
+	public static final int SEPARACION_X_TORRES = 25;
+	//La base de la torre esta a 169 pixeles sobre el eje y de la imagen
+	public static final int DESPLAZAMIENTO_Y_BASE_TORRE = 169;
+	//Altura en pixeles de la torre
+	public static final int ALTO_TORRE = 210;
+	//Largo en pixeles de la torre
+	public static final int LARGO_TORRE = 165;
+	//Imagen de la torre
+	private Image torre;
+	//Numero de la torre (van del 0 al 2 numeradas)
+	private int numTorre;
+
+	/**
+	 * Crea la torre
+	 * @param rutaImagen
+	 * @param numTorre
+	 */
+	public Torres(String rutaImagen,int numTorre){
+		torre = new ImageIcon(this.getClass().getResource("imagenes/torre.png")).getImage();
+		this.numTorre = numTorre;
+	}
+	
+	
+	public void paint(Graphics g){
+		//Pinto torre
+		g.drawImage(torre,DESPLAZAMIENTO_X_TORRE + numTorre*(LARGO_TORRE+SEPARACION_X_TORRES)
+				,DESPLAZAMIENTO_Y_TORRE,null);
+		//Pinto cada disco que tiene la torre
+		for(int i=size()-1;i>=0;i--){
+			NDiscos actual = get(i);
+			actual.paint(g,DESPLAZAMIENTO_X_TORRE + numTorre*(LARGO_TORRE+SEPARACION_X_TORRES)
+					,DESPLAZAMIENTO_Y_TORRE+(DESPLAZAMIENTO_Y_BASE_TORRE-NDiscos.ALTO_DISCO*i));
+		}
+	}
+}
+

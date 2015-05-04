@@ -1,0 +1,24 @@
+package hanoi;
+import java.awt.Toolkit;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+
+public class NumDiscos {
+	
+
+	interval = 1000; // repeating every 1000 ms
+
+	new Timer(interval, new ActionListener() {
+    
+		public void actionPerformed(ActionEvent e) {
+       
+    }
+}).start();
+	
+	Timer timernamegoeshere = new Timer(delayinmilis,actionlistener);
+
+}
+}
+

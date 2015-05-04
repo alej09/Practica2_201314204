@@ -3,19 +3,22 @@ package juego;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import menu.Hanoi;
 
-public class TorredeHanoi {
+public class TorredeHanoi extends JFrame {
 	
 	
-	private ImageIcon fondotorres = new ImageIcon("dibujos\\torres.png");
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 
 	public TorredeHanoi(){
 		//CREANDO VENTANA
@@ -26,10 +29,6 @@ public class TorredeHanoi {
 		ven.setLocationRelativeTo(null);
 		ven.setResizable(false);
 		ven.setLayout(null);
-		
-		JLabel fondo = new JLabel(fondotorres);
-		fondo.setSize(900, 620);
-		fondo.setVisible(true);
 		
 		//CREANDO BOTONES
 		JButton bNuevo = new JButton("Nuevo Juego");
@@ -42,25 +41,18 @@ public class TorredeHanoi {
 		bPuntajes.setBounds(310, 400, 200, 35);
 		
 		//CREANDO CAJA DE USUARIO
-		JTextField usuario = new JTextField();
+		final JTextField usuario = new JTextField();
 		usuario.setBounds(310, 207, 120, 20);
 		
-		
-		//CREANDO LISTA DE DISCOS
 		String[] numero = new String[] {"3","4","5","6","7","8"};
         final JComboBox<String> discos = new JComboBox<String>(numero);
-        JLabel nu = new JLabel("Número de Discos");
-        nu.setBounds(200, 248, 50, 50);
-        discos.setVisible(false);
-        discos.setBounds(310,248,50,20);
-		
-		
+        
 		//AÑADIENDO COMPONENTES
 		ven.add(bNuevo);
 		ven.add(bDemo);
 		ven.add(bPuntajes);
 		ven.add(discos);
-		discos.setVisible(true);
+		discos.setVisible(false);
 		ven.add(usuario);
 		ven.repaint();
 		
@@ -70,9 +62,27 @@ public class TorredeHanoi {
             public void actionPerformed(ActionEvent e){
             	ven.dispose();
             	llamarNuevo(discos.getSelectedItem());
+            	guardarNombre(usuario.getText()); {
+    				new EscribirTex();
+    				
+    			}
             }
+
+			private void guardarNombre(String text) {
+				String nombre  = usuario.getText();
+				
+			}
         });
-		
+		// EVENTO DEL BOTON PUNTAJE
+		bPuntajes.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+            	ven.dispose();
+            	new LeerTex();
+            }
+
+			
+        });
 		//EVENTO DE BOTON DEMO
 		bDemo.addActionListener(new ActionListener(){
             @Override
@@ -84,21 +94,19 @@ public class TorredeHanoi {
 		
 	}
 	
+
 	public void llamarNuevo(Object num){
         String i = (String) num;
-		BotonesTorres jt = new BotonesTorres();
-		jt.nuevoJuego(i);
+		JuegoTorres jt = new JuegoTorres();
+		jt.Torreh(null);
 	}
 	
 	public void llamarTutorial(){
 		new Hanoi();
 		
 	}
-	
 	public static void main(String[] args){
-		TorredeHanoi t = new TorredeHanoi();
-		
+		TorredeHanoi t = new TorredeHanoi();	
 	}
-
 }
 

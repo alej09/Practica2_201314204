@@ -1,0 +1,144 @@
+package tutorial;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Hashtable;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSlider;
+
+public class Config1 extends JDialog implements ActionListener{
+	
+	//Opciones del dialogo
+	public static final int CARGAR = 1, CANCELAR = 2, ERROR = -1;
+	
+	private static final long serialVersionUID = 1L;
+	
+	private JSlider numDiscos;//Permite elegir el numero de discos
+	private JSlider velocidad; //Permite elegir la velocidad de la simulacion
+	private JRadioButton rec;
+	private JRadioButton iter;
+	private ButtonGroup bgAlgoritmos;
+	private JButton cargar; //Carga la configuracion
+	private JButton cancelar;
+	private Config config;
+	private int opcion;
+	private JFrame owner;
+	
+	/**
+	 * Inicializa el dialogo
+	 * @param owner
+	 */
+	public Config1(JFrame owner){
+		super(owner,"Configuracion Torres de Hanoi",true);
+		this.owner = owner;
+		configurarDialogo();
+		
+	}
+	/**
+	 * Configura todos los componentes del dialogo
+	 */
+	private void configurarDialogo(){
+		config = null;
+		bgAlgoritmos = new ButtonGroup();
+		rec = new JRadioButton("Recursivo",true);
+		iter = new JRadioButton("Iterativo",false);
+		bgAlgoritmos.add(rec);
+		bgAlgoritmos.add(iter);
+		numDiscos = new JSlider(JSlider.HORIZONTAL,1,8,8);
+		numDiscos.setMajorTickSpacing(1);		
+		numDiscos.setPaintTicks(true);
+		numDiscos.setSnapToTicks(true);
+		numDiscos.setPaintLabels(true);
+		velocidad = new JSlider(JSlider.HORIZONTAL,1,5,3);
+		velocidad.setMajorTickSpacing(1);		
+		velocidad.setPaintTicks(true);		
+		velocidad.setSnapToTicks(true);
+		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+		labelTable.put(1, new JLabel("Lento"));
+		labelTable.put(3, new JLabel("Normal"));
+		labelTable.put(5, new JLabel("Rapido"));
+		velocidad.setLabelTable(labelTable);
+		velocidad.setPaintLabels(true);
+		cargar = new JButton("Cargar");
+		cargar.setToolTipText("Reinicia todo con la nueva configuracion");
+		cancelar = new JButton("Cancelar");
+		cargar.addActionListener(this);
+		cancelar.addActionListener(this);		
+		JPanel panel = new JPanel(new FlowLayout());
+		panel.add(new JLabel("Nº de discos: "));
+		panel.add(numDiscos);
+		JPanel panel1 = new JPanel(new FlowLayout());
+		panel1.add(new JLabel("Velocidad: "));
+		panel1.add(velocidad);
+		JPanel panel2 = new JPanel(new FlowLayout());
+		panel2.add(new JLabel("Algoritmo: "));
+		panel2.add(rec);
+		panel2.add(iter);
+		JPanel panel3 = new JPanel(new GridLayout(3,0));
+		panel3.add(panel);
+		panel3.add(panel1);
+		panel3.add(panel2);
+		JPanel panel5 = new JPanel(new FlowLayout());
+		panel5.add(cargar);
+		panel5.add(cancelar);
+		add(panel3,BorderLayout.CENTER);
+		add(panel5,BorderLayout.SOUTH);
+		pack();
+		setResizable(false);
+	}
+	/**
+	 * Invocacion al dialogo para modificar la configuracion
+	 * @param c
+	 * @return
+	 */
+	public int showDialog(Config c){
+		opcion = ERROR;
+		config = c; //Los cambios se haran sobre la configuracion pasada
+		setLocation(owner.getX()+(owner.getWidth()/2-getWidth()/2)
+				, owner.getY()+(owner.getHeight()/2-getHeight()/2));
+		setVisible(true);
+		config = null;
+		return opcion;
+	}
+	/**
+	 * Coje los eventos
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(cargar)){			
+			switch (velocidad.getValue()) {
+				case 1:
+					config.setVelocidad(3000);
+					break;
+				case 2:
+					config.setVelocidad(2000);
+					break;
+				case 3:
+					config.setVelocidad(1000);
+					break;
+				case 4:
+					config.setVelocidad(500);
+					break;
+				case 5:
+					config.setVelocidad(250);
+					break;
+			}		
+			config.setNumeroDiscos(numDiscos.getValue());				
+			opcion = CARGAR;
+		}else{
+			opcion = CANCELAR;
+		}
+		config.setAlgoritmo(rec.isSelected() ? Config.RECURSIVO : Config.ITERATIVO);
+		setVisible(false);
+	}
+}

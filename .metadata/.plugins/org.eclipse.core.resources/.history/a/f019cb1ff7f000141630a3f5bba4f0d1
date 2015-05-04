@@ -1,0 +1,54 @@
+package menu;
+
+import java.awt.Label;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Calendar;
+
+import javax.swing.JFrame;
+
+public class Crono extends JFrame {
+
+private static final long serialVersionUID = 1L;
+private Label etiqueta;
+private long tiempoInicial = 0;
+
+public static void main(String[] args)
+{
+Crono cronometro = new Crono();
+cronometro.init();
+JFrame frame = new JFrame( "Cronometro" );
+frame.add(cronometro);
+frame.setSize( 300, 300 );
+
+frame.addWindowListener( new WindowAdapter()
+{
+public void windowClosing( WindowEvent e )
+{
+System.exit( 0 );
+}
+} );
+
+frame.setVisible( true );
+}
+
+public void init()
+{
+etiqueta = new Label();
+add( etiqueta );
+tiempoInicial = System.currentTimeMillis();
+Thread hilo = new Thread( (Runnable) this );
+hilo.start();
+}
+
+public void run()
+{
+Calendar tiempo = Calendar.getInstance();
+while (true)
+{
+tiempo.setTimeInMillis( System.currentTimeMillis() - tiempoInicial );
+etiqueta.setText(tiempo.get( Calendar.MINUTE ) + ":" + tiempo.get( Calendar.SECOND ) + ":" + tiempo.get( Calendar.MILLISECOND ));
+}
+}
+
+}

@@ -1,0 +1,201 @@
+package tutorial;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.LinkedList;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+public class Ventana extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
+	private THanoi juego;
+	//Menu de la ventana
+	private JMenu menuArchivo;
+	private JMenuItem resolver;
+	private JMenuItem reiniciar;
+	private JMenuItem pausa;
+	private JMenuItem salir;
+	private JMenu opciones;
+	private JMenuItem configuracion;
+	private JMenu ayuda;
+	
+	private JMenuBar barra;
+	//Configuracion de la simulacion
+	private Config config;
+	private boolean hayPausa; //Indica si la animacion esta en pausa
+	private Dibujante trabajador; //Thread que dibujara la simulacion
+	private Config1 diag; //Dialogo para configurar
+	
+	
+	private class Dibujante extends Thread{
+		
+		public void run(){
+			//Conseguimos recorrido en inorden del arbol
+			LinkedList<Mover> movimientos = juego.getMovimientos();
+			boolean acabar = false; 
+			while(movimientos.size() > 0 && !acabar){
+				Mover actual = movimientos.remove();
+				//Movemos
+				juego.mover(actual.getOrigen(), actual.getDestino());							
+				try {
+					if(hayPausa){
+						synchronized (this) {
+							wait();
+						}						
+					}
+					juego.repaint();
+					Thread.sleep(config.getVelocidad());
+				} catch (InterruptedException e) {
+					acabar = true;//Me avisan de que tengo que acabar			
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Inicializa la ventana
+	 * @param titulo
+	 */
+	public Ventana(String titulo){
+		super(titulo);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		hayPausa = false;
+		inicializaComponentes();
+		setVisible(true);
+	}
+	
+	private void inicializaComponentes(){
+		trabajador = null;
+		juego = new THanoi(8);
+		diag = new Config1(this);
+		config = new Config(1000, 8,Config.RECURSIVO);
+		menuArchivo = new JMenu("Archivo");
+		resolver = new JMenuItem("Resolver");
+		reiniciar = new JMenuItem("Reiniciar");
+		reiniciar.setEnabled(false);
+		pausa = new JMenuItem("Pausa");
+		pausa.setEnabled(false);
+		salir = new JMenuItem("Salir");
+		menuArchivo.add(resolver);
+		menuArchivo.add(reiniciar);
+		menuArchivo.add(pausa);
+		menuArchivo.addSeparator();
+		menuArchivo.add(salir);
+		opciones = new JMenu("Opciones");
+		configuracion = new JMenuItem("Configuracion");
+		opciones.add(configuracion);		
+		
+		barra = new JMenuBar();
+		setJMenuBar(barra);
+		barra.add(menuArchivo);
+		barra.add(opciones);
+	
+		
+		resolver.addActionListener(
+				new ActionListener() {					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(resolver.isEnabled()){
+							trabajador = new Dibujante();
+							resolver.setEnabled(false);
+							reiniciar.setEnabled(true);
+							pausa.setEnabled(true);
+							hayPausa = false;
+							if(config.getAlgoritmo() == Config.RECURSIVO){
+								juego.hanoiRecursivo();
+							}else{
+								juego.hanoiIterativo();
+							}
+							trabajador.start();
+						}						
+					}
+				}
+		);
+		
+		reiniciar.addActionListener(
+				new ActionListener() {					
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						trabajador.interrupt();
+						juego.reiniciar(config.getNumeroDiscos(),config.getAlgoritmo());
+						juego.repaint();
+						resolver.setEnabled(true);
+						pausa.setEnabled(false);
+						reiniciar.setEnabled(false);
+						if(hayPausa){
+							synchronized (trabajador) {
+								trabajador.notify();
+							}
+							pausa.setText("Pausa");
+							hayPausa = !hayPausa;
+						}
+					}
+				}
+		);
+		
+		pausa.addActionListener(
+				new ActionListener() {					
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						if(hayPausa){
+							synchronized (trabajador) {
+								trabajador.notify();
+							}
+							pausa.setText("Pausa");
+						}else{
+							pausa.setText("Continuar");
+						}
+						hayPausa = !hayPausa;
+					}
+				}
+		);
+		
+		salir.addActionListener(
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						System.exit(1); 						
+					}
+				}
+		);
+		
+		configuracion.addActionListener(
+				new ActionListener() {					
+					@Override
+					public void actionPerformed(ActionEvent e) {						
+						int opcion = diag.showDialog(config);
+						if(opcion == Config1.CARGAR){
+							if(trabajador != null)
+								trabajador.interrupt();
+							juego.reiniciar(config.getNumeroDiscos(),config.getAlgoritmo());
+							juego.repaint();
+							resolver.setEnabled(true);
+							pausa.setEnabled(false);
+							reiniciar.setEnabled(false);
+						}
+					}
+				}
+		);
+		
+		add(juego,BorderLayout.CENTER);
+		juego.hanoiRecursivo();
+		setResizable(false);
+		pack();		
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setSize(900, 670);
+		setLocation(dim.width/2 - getWidth()/2, dim.height/2 - getHeight()/2);
+	}
+	
+	
+	public static void main(String [] args){
+		new Ventana("Tutorial");
+	}
+
+}

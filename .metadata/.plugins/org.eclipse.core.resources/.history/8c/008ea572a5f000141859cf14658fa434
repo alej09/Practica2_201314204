@@ -1,0 +1,44 @@
+package juego;
+
+import java.awt.MouseInfo;
+import java.awt.Point;
+
+import javax.swing.JLabel;
+
+public class Arrastrar {
+
+    private Point p;
+    private Point pl;
+    private int lx,ly;
+    boolean calcular_diferencia=true;
+    
+    JLabel etiqueta = new JLabel();
+    private void etiqueta() {
+		// TODO Auto-generated method stub
+    	etiqueta.show();
+	}
+    private void etiquetaMouseDragged(java.awt.event.MouseEvent evt) {                                     
+        //calculo la posición del ratón y lo guardo en el p
+        p = MouseInfo.getPointerInfo().getLocation();
+        
+        //este if solo se ejecuta al principio de que empiece a mover la etiqueta
+        if(calcular_diferencia){
+            //calculo la posición de la etiqueta
+            pl = etiqueta.getLocation();
+            //guardo la diferencia entre la posición del ratón y de la etiqueta
+            lx=p.x-pl.x;
+            ly=p.y-pl.y;
+        }
+        //ponemos false el calculo para que no lo vuelva a calcular otra vez
+        calcular_diferencia=false;
+        
+        //cambio la posición de la etiqueta a la posición del ratón menos la diferencia calculada
+        etiqueta.setLocation(p.x-lx, p.y-ly);
+}
+    
+private void etiquetaMousePressed(java.awt.event.MouseEvent evt) {                                     
+        
+        calcular_diferencia=true;
+
+}
+}

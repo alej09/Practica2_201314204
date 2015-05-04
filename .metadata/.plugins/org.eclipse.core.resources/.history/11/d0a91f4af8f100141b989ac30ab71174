@@ -1,0 +1,42 @@
+package tutorial;
+
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+
+public class NDiscos {
+	
+	//Largo en pixeles de la torre
+	public static final int LARGO_DISCO = 165;
+	//Alto en pixeles de la torre
+	public static final int ALTO_DISCO = 23;
+	//Numero del disco
+	private int disco;
+	//Imagen para pintar el disco
+	private Image imagen;
+	/**
+	 * Crea el disco
+	 * @param disco
+	 */
+	public NDiscos(int disco){
+		this.disco = disco;
+		imagen = new ImageIcon(this.getClass().getResource("imagenes/disco"+disco+".png")).getImage();
+	}
+	/**
+	 * Retorna el numero del disco
+	 * @return numero del disco
+	 */
+	public int getDisco(){
+		return disco;
+	}
+	/**
+	 * Pinta en el contexto grafico el disco
+	 * @param g contexto grafico
+	 * @param x coordenada x a pintar
+	 * @param y coordenada y a pintar
+	 */
+	public void paint(Graphics g,int x,int y){
+		g.drawImage(imagen,x,y,null);
+	}
+}

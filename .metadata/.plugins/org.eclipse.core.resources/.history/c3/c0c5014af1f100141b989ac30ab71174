@@ -1,0 +1,21 @@
+package tutorial;
+
+import java.awt.Image;
+import javax.swing.JFrame;
+
+public class Fondo1 extends JFrame {
+
+    private final Fondo contenedor = new Fondo();
+
+    public Fondo1() {
+        setContentPane(contenedor);
+    }
+
+    public void setImagen(String nombreImagen) {
+        contenedor.setImagen(nombreImagen);
+    }
+
+    public void setImagen(Image nuevaImagen) {
+        contenedor.setImagen(nuevaImagen);
+    }
+}
