@@ -1,0 +1,131 @@
+package juego;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import menu.Hanoi;
+
+public class TorredeHanoi extends JFrame {
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+
+	public TorredeHanoi(){
+		//CREANDO VENTANA
+		final JFrame ven = new JFrame("TORRE  DE  HANOI");
+		ven.setSize(900, 620);
+		ven.setVisible(true);
+		ven.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ven.setLocationRelativeTo(null);
+		ven.setResizable(false);
+		ven.setLayout(null);
+		
+		//CREANDO BOTONES
+		JButton bNuevo = new JButton("Nuevo Juego");
+		bNuevo.setBounds(310, 310, 200, 35);
+
+		JButton bDemo = new JButton("Tutorial");
+		bDemo.setBounds(310, 355, 200, 35);
+		
+		
+		JButton bPuntajes = new JButton("Puntajes");
+		bPuntajes.setBounds(310, 400, 200, 35);
+		
+		//CREANDO CAJA DE USUARIO
+		final JTextField usuario = new JTextField();
+		usuario.setBounds(310, 207, 120, 20);
+		
+		final JTextArea instrucciones = new JTextArea("INSTRUCCIONES");
+		instrucciones.setBounds(15, 20, 150, 150);
+		instrucciones.setEditable(false);
+		instrucciones.setVisible(true);
+	    Font font = new Font("Verdana", Font.ITALIC, 15);
+	    instrucciones.setFont(font);
+	    String text = "Un objeto JTextArea es una área multilínea para escribir texto. "
+
+	    + "Se puede cambiar el número de líneas que se mostrarán, "
+
+	    + "y también el numero de columnas. Puedes cambiar las fuentes y tamaños de letras. "
+
+	    + "Y puedes agregar tu TextArea en un JScrollPane para poder mover las zonas de texto." ;
+		
+		String[] numero = new String[] {"3","4","5","6","7","8"};
+        final JComboBox<String> discos = new JComboBox<String>(numero);
+        
+		//AÑADIENDO COMPONENTES
+		ven.add(bNuevo);
+		ven.add(bDemo);
+		ven.add(bPuntajes);
+		ven.add(discos);
+		ven.add(instrucciones);
+		discos.setVisible(false);
+		ven.add(usuario);
+		ven.repaint();
+		
+		//EVENTO DE BOTON NUEVO JUEGO
+		bNuevo.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+            	ven.dispose();
+            	llamarNuevo(discos.getSelectedItem());
+            	guardarNombre(usuario.getText()); {
+    				new EscribirTex();
+    				
+    			}
+            }
+
+			private void guardarNombre(String text) {
+				String nombre  = usuario.getText();
+				
+			}
+        });
+		// EVENTO DEL BOTON PUNTAJE
+		bPuntajes.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+            	ven.dispose();
+            	new LeerTex();
+            }
+
+			
+        });
+		//EVENTO DE BOTON TUTORIAL
+		bDemo.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+            	ven.dispose();
+            	llamarTutorial();
+            }
+        });
+		
+	}
+	
+
+	public void llamarNuevo(Object num){
+        String i = (String) num;
+		JuegoTorres jt = new JuegoTorres();
+		jt.Torreh(null);
+	}
+	
+	public void llamarTutorial(){
+		new Hanoi();
+		
+	}
+	public static void main(String[] args){
+		TorredeHanoi t = new TorredeHanoi();	
+	}
+}
+

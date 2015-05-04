@@ -16,7 +16,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import juego.TorredeHanoi;
+
  
 public class Hanoi extends JFrame implements ActionListener, ChangeListener {
 
@@ -123,7 +123,7 @@ public class Hanoi extends JFrame implements ActionListener, ChangeListener {
     public void met(){
     	 
     	    barra = new JMenuBar();
-    	    menu = new JMenu("Ficheros");
+    	    menu = new JMenu("Opciones");
     	    boton1 = new JMenuItem("Regresar");
     	    boton2 = new JMenuItem("Salir");
     	    boton1.addActionListener(this);

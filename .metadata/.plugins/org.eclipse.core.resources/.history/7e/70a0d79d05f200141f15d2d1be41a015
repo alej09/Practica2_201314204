@@ -1,0 +1,141 @@
+package juego;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import menu.Hanoi;
+
+public class TorredeHanoi extends JFrame {
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+
+	public TorredeHanoi(){
+		//CREANDO VENTANA
+		final JFrame ven = new JFrame("TORRE  DE  HANOI");
+		ven.setSize(900, 620);
+		ven.setVisible(true);
+		ven.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ven.setLocationRelativeTo(null);
+		ven.setResizable(false);
+		ven.setLayout(null);
+		
+		//CREANDO BOTONES
+		JButton bNuevo = new JButton("Nuevo Juego");
+		bNuevo.setBounds(340, 310, 200, 35);
+
+		JButton bDemo = new JButton("Tutorial");
+		bDemo.setBounds(340, 355, 200, 35);
+		
+		
+		JButton bPuntajes = new JButton("Puntajes");
+		bPuntajes.setBounds(340, 400, 200, 35);
+		
+		//CREANDO CAJA DE USUARIO
+		final JTextField usuario = new JTextField();
+		usuario.setBounds(340, 207, 120, 20);
+		
+		final JTextArea instrucciones = new JTextArea("INSTRUCCIONES"+"\n\nLa Torre de Hanoi es un juego que consiste en mover las " + ""
+				+ "piezas de la primera base a las siguientes con el objetivo de construir nuevamente una torre."
+				
+
+	    + "\n\n1) Las piezas se mueven de una en una, empezando por la más pequeña."
+
+
+	    + "\n2) No se puede poner una pieza mayor sobre una menor "
+
+	    + "\n3) Solamente se puede mover el disco que esta hasta arriba de cada torre." 
+	    + "\n4) El juego se gana cuando se forma la torre de discos que inicialmente se tiene en la torre 1, en cualquiera de las otras 2 torres.");
+		instrucciones.setBounds(15, 20, 300, 300);
+		instrucciones.setEditable(false);
+		instrucciones.setVisible(true);
+	    Font font = new Font("Verdana", Font.ITALIC, 15);
+	    instrucciones.setFont(font);
+	    instrucciones.setForeground(Color.white);
+	    instrucciones.setLineWrap (true);
+	    instrucciones.setLineWrap (true);
+	    instrucciones.setWrapStyleWord(true);
+	    instrucciones.setWrapStyleWord(true);
+	    instrucciones.setBackground(Color.DARK_GRAY);
+		
+		String[] numero = new String[] {"3","4","5","6","7","8"};
+        final JComboBox<String> discos = new JComboBox<String>(numero);
+        
+		//AÑADIENDO COMPONENTES
+		ven.add(bNuevo);
+		ven.add(bDemo);
+		ven.add(bPuntajes);
+		ven.add(discos);
+		ven.add(instrucciones);
+		discos.setVisible(false);
+		ven.add(usuario);
+		ven.repaint();
+		
+		//EVENTO DE BOTON NUEVO JUEGO
+		bNuevo.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+            	ven.dispose();
+            	llamarNuevo(discos.getSelectedItem());
+            	guardarNombre(usuario.getText()); {
+    				new EscribirTex();
+    				
+    			}
+            }
+
+			private void guardarNombre(String text) {
+				String nombre  = usuario.getText();
+				
+			}
+        });
+		// EVENTO DEL BOTON PUNTAJE
+		bPuntajes.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+            	ven.dispose();
+            	new LeerTex();
+            }
+
+			
+        });
+		//EVENTO DE BOTON TUTORIAL
+		bDemo.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+            	ven.dispose();
+            	llamarTutorial();
+            }
+        });
+		
+	}
+	
+
+	public void llamarNuevo(Object num){
+        String i = (String) num;
+		JuegoTorres jt = new JuegoTorres();
+		jt.Torreh(null);
+	}
+	
+	public void llamarTutorial(){
+		new Hanoi();
+		
+	}
+	public static void main(String[] args){
+		TorredeHanoi t = new TorredeHanoi();	
+	}
+}
+

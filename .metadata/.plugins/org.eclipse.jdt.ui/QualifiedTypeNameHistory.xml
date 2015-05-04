@@ -13,8 +13,6 @@
 <fullyQualifiedTypeName name="javax.swing.JMenuItem"/>
 <fullyQualifiedTypeName name="javax.swing.JMenuBar"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
-<fullyQualifiedTypeName name="java.awt.Font"/>
-<fullyQualifiedTypeName name="java.awt.Color"/>
 <fullyQualifiedTypeName name="javax.swing.JDialog"/>
 <fullyQualifiedTypeName name="javax.swing.JSlider"/>
 <fullyQualifiedTypeName name="javax.swing.JRadioButton"/>
@@ -22,7 +20,6 @@
 <fullyQualifiedTypeName name="javax.swing.ButtonGroup"/>
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
 <fullyQualifiedTypeName name="java.util.Hashtable"/>
-<fullyQualifiedTypeName name="javax.swing.JLabel"/>
 <fullyQualifiedTypeName name="java.awt.FlowLayout"/>
 <fullyQualifiedTypeName name="javax.swing.JPanel"/>
 <fullyQualifiedTypeName name="java.awt.GridLayout"/>
@@ -37,4 +34,8 @@
 <fullyQualifiedTypeName name="java.awt.Paint"/>
 <fullyQualifiedTypeName name="tutorial.Fondo1"/>
 <fullyQualifiedTypeName name="java.awt.Image"/>
+<fullyQualifiedTypeName name="javax.swing.JLabel"/>
+<fullyQualifiedTypeName name="javax.swing.JTextArea"/>
+<fullyQualifiedTypeName name="java.awt.Font"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
 </qualifiedTypeNameHistroy>

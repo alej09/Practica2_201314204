@@ -1,0 +1,33 @@
+package menu;
+
+import java.io.FileReader;
+import java.io.BufferedReader;
+
+	public class LeerTex {
+		
+		public void leerTex(){
+//Creamos un String que va a contener todo el texto del archivo
+			String puntajes="";
+
+			try
+			{
+//Creamos un archivo FileReader que obtiene lo que tenga el archivo
+			FileReader lector=new FileReader("puntuaciones.txt");
+
+//El contenido de lector se guarda en un BufferedReader
+			BufferedReader contenido=new BufferedReader(lector);
+
+//Con el siguiente ciclo extraemos todo el contenido del objeto "contenido" y lo mostramos
+			while((puntajes=contenido.readLine())!=null)
+	{
+	System.out.println(puntajes);
+	}
+		}
+
+//Si se causa un error al leer cae aqui
+		catch(Exception e)
+		{
+			System.out.println("Error al leer");
+		}
+	}
+}
