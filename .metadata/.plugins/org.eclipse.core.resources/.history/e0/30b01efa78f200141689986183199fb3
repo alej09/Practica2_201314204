@@ -46,8 +46,6 @@ public class TorredeHanoi extends JFrame {
 		bPuntajes.setBounds(340, 400, 200, 35);
 		
 		//CREANDO CAJA DE USUARIO
-		
-		
 		final JTextField usuario = new JTextField();
 		usuario.setBounds(340, 207, 120, 20);
 		
@@ -77,12 +75,10 @@ public class TorredeHanoi extends JFrame {
 	    instrucciones.setWrapStyleWord(true);
 	    instrucciones.setBackground(Color.DARK_GRAY);
 		
-	    final JTextArea participante = new JTextArea("");
-	    participante.setBounds(500, 100, 200, 30);
+	    final JTextArea participante = new JTextArea("Nombre");
+	    participante.setBounds(200, 200, 300, 400);
 	    participante.setEditable(false);
-	    participante.setVisible(false);
-	    
-	    
+	    participante.setVisible(true);
 	    
 		String[] numero = new String[] {"3","4","5","6","7","8"};
         final JComboBox<String> discos = new JComboBox<String>(numero);
@@ -106,16 +102,7 @@ public class TorredeHanoi extends JFrame {
             	ven.dispose();
             	llamarNuevo(discos.getSelectedItem());
             	guardarNombre(usuario.getText()); {
-            		if (usuario.getText() == (""))  {
-                		
-                	}
-                	else if (usuario.getText()!= ("")){
-                	
-                	participante.setVisible(true);
-                	participante.setText(usuario.getText());
-                	
-                	}
-            		
+    				new EscribirTex();
     				
     			}
             }
@@ -129,11 +116,8 @@ public class TorredeHanoi extends JFrame {
 		bPuntajes.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-            	
+            	ven.dispose();
             	llamarTexto();
-            	
-            	
-            	participante.add(usuario);
             	
             }
 

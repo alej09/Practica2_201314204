@@ -63,7 +63,7 @@ public class Hanoi extends JFrame implements ActionListener, ChangeListener {
         botonIniciar.addActionListener(this);
         panelInferior.add(botonIniciar);
 
-        labelInformacion = new JLabel("Movimientos Completados");
+        labelInformacion = new JLabel("RESOLUCIÓN COMPLETADA");
         labelInformacion.setForeground(Color.red);
         labelInformacion.setVisible(false);
         panelInferior.add(labelInformacion);

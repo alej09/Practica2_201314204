@@ -1,0 +1,70 @@
+package menu;
+
+//(1) PAQUETE
+
+import java.awt.*;
+
+import javax.swing.*;
+
+
+
+//(2) FORMULARIO
+
+public class Prueba extends JFrame {
+
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//(3) CONTROLES DEL FORMULARIO        
+	String msg1 = ("H");
+	String msg2 = ("H1");
+   JPanel jpanel = (JPanel) this.getContentPane();
+
+   JLabel jlabel = new JLabel();
+
+   JTextField jtextfield = new JTextField();    
+   
+
+   //(4) CONSTRUCTOR DEL FORMULARIO       
+
+   public Prueba() {
+
+       //(5) PROPIEDADES DEL CONTENEDOR
+
+       jpanel.setLayout(null);
+
+      jpanel.setBackground(Color.lightGray);
+      jtextfield.getText(); 
+
+    
+
+       //(6) PROPIEDADES DE LOS CONTROLES         
+
+      jlabel.setBounds(new Rectangle(5, 15, 220, 21));
+
+      jlabel.setText("Introduzca su peso en kgs por favor");
+
+      jtextfield.setBounds(new Rectangle(225, 15, 80, 21));
+
+
+
+      //(7) ADICION DE LOS CONTROLES AL CONTENEDOR        
+
+      jpanel.add(jlabel, null);
+
+      jpanel.add(jtextfield, null);
+      jlabel.setText(msg1 + msg2);
+    
+
+       //(8) PROPIEDADES DEL FORMULARIO         
+
+      setSize(300,150);        setTitle("Form1");        setVisible(true);
+
+   }
+
+   //(9) METODOS DEL FORMULARIO     
+
+   public static void main(String arg[]) { new Prueba();  }
+
+}    

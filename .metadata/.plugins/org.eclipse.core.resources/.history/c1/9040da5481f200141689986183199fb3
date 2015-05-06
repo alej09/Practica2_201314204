@@ -46,7 +46,7 @@ public class TorredeHanoi extends JFrame {
 		bPuntajes.setBounds(340, 400, 200, 35);
 		
 		//CREANDO CAJA DE USUARIO
-		
+		String s = usuario
 		
 		final JTextField usuario = new JTextField();
 		usuario.setBounds(340, 207, 120, 20);
@@ -106,16 +106,7 @@ public class TorredeHanoi extends JFrame {
             	ven.dispose();
             	llamarNuevo(discos.getSelectedItem());
             	guardarNombre(usuario.getText()); {
-            		if (usuario.getText() == (""))  {
-                		
-                	}
-                	else if (usuario.getText()!= ("")){
-                	
-                	participante.setVisible(true);
-                	participante.setText(usuario.getText());
-                	
-                	}
-            		
+    				new EscribirTex();
     				
     			}
             }
@@ -131,7 +122,15 @@ public class TorredeHanoi extends JFrame {
             public void actionPerformed(ActionEvent e){
             	
             	llamarTexto();
+            	if (usuario.getText() == (""))  {
+            		
+            	}
+            	else if (usuario.getText()!= ("")){
             	
+            	participante.setVisible(true);
+            	participante.setText(usuario);
+            	
+            	}
             	
             	participante.add(usuario);
             	

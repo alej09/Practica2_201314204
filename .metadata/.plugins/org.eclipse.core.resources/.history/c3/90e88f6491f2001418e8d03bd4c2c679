@@ -106,16 +106,8 @@ public class TorredeHanoi extends JFrame {
             	ven.dispose();
             	llamarNuevo(discos.getSelectedItem());
             	guardarNombre(usuario.getText()); {
-            		if (usuario.getText() == (""))  {
-                		
-                	}
-                	else if (usuario.getText()!= ("")){
-                	
-                	participante.setVisible(true);
-                	participante.setText(usuario.getText());
-                	
-                	}
-            		
+            		participante.setText(usuario.getText());
+            		new EscribirTex();
     				
     			}
             }
@@ -131,7 +123,15 @@ public class TorredeHanoi extends JFrame {
             public void actionPerformed(ActionEvent e){
             	
             	llamarTexto();
+            	if (usuario.getText() == (""))  {
+            		
+            	}
+            	else if (usuario.getText()!= ("")){
             	
+            	participante.setVisible(true);
+            	participante.setText(usuario.getText());
+            	
+            	}
             	
             	participante.add(usuario);
             	

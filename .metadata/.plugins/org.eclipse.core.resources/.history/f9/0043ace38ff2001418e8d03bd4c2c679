@@ -284,7 +284,6 @@ private class Parpadeo implements ActionListener { //clase
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
         new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
@@ -472,10 +471,6 @@ private class Parpadeo implements ActionListener { //clase
         getContentPane().add(jLabel21);
         jLabel21.setBounds(400, 135, 120, 20);
        
-        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 20));
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        getContentPane().add(jLabel22);
-        jLabel22.setBounds(400, 135, 120, 20);
         
         configurarPanel1();
        
@@ -910,7 +905,7 @@ private class Parpadeo implements ActionListener { //clase
                 segundos = 0;
                 horas = 0;
                 jugadasRealizadas = 0;
-                jLabel5.setText("" + jugadasRealizadas);
+                jLabel5.setText("" + jugadasRealizadas+" "+(jugadasRealizadas/jugadasPosibles)*100);
                 avisos = 0;
                 jLabel19.setText("" + avisos);
                
@@ -957,7 +952,6 @@ private class Parpadeo implements ActionListener { //clase
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
